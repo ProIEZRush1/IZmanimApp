@@ -20,6 +20,7 @@ class _LocationScreenState extends State<LocationScreen> {
   List<app_location.Location> _filteredLocations = [];
   bool _isLoadingPresets = false;
   Timer? _debounce;
+  String _searchText = '';
   
   final _latController = TextEditingController();
   final _lonController = TextEditingController();
@@ -41,6 +42,10 @@ class _LocationScreenState extends State<LocationScreen> {
   }
   
   void _onSearchChanged(String query) {
+    setState(() {
+      _searchText = query;
+    });
+    
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       _filterLocations(query);
@@ -51,6 +56,7 @@ class _LocationScreenState extends State<LocationScreen> {
     if (query.isEmpty) {
       setState(() {
         _filteredLocations = _presetLocations;
+        _isLoadingPresets = false;
       });
       return;
     }
@@ -70,6 +76,7 @@ class _LocationScreenState extends State<LocationScreen> {
         _isLoadingPresets = false;
       });
     } catch (e) {
+      print('Search error: $e');
       // If search fails, filter local locations
       setState(() {
         _filteredLocations = _presetLocations
@@ -152,13 +159,17 @@ class _LocationScreenState extends State<LocationScreen> {
               onChanged: _onSearchChanged,
               decoration: InputDecoration(
                 labelText: localizations.get('search'),
+                hintText: 'Brooklyn, Paris, Tel Aviv...',
                 prefixIcon: const Icon(Icons.search),
                 border: const OutlineInputBorder(),
-                suffixIcon: _searchController.text.isNotEmpty
+                suffixIcon: _searchText.isNotEmpty
                     ? IconButton(
                         icon: const Icon(Icons.clear),
                         onPressed: () {
                           _searchController.clear();
+                          setState(() {
+                            _searchText = '';
+                          });
                           _filterLocations('');
                         },
                       )

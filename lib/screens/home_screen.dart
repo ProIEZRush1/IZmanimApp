@@ -128,10 +128,27 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
     
+    // Don't show "no times" if we haven't loaded anything yet
+    final locationProvider = context.read<LocationProvider>();
     if (provider.zmanim.isEmpty) {
+      if (locationProvider.currentLocation == null) {
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.location_off, size: 64),
+              const SizedBox(height: 16),
+              Text(
+                localizations.get('select_location'),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
+        );
+      }
       return Center(
         child: Text(
-          localizations.get('no_zmanim'),
+          localizations.get('no_times_available'),
           style: Theme.of(context).textTheme.titleMedium,
         ),
       );

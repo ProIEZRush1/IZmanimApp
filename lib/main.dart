@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
               Locale('es'),
               Locale('he'),
               Locale('ar'),
+              Locale('fr'),
             ],
             home: const HomeScreen(),
           );
