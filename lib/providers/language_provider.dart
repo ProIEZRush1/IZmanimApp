@@ -32,8 +32,6 @@ class LanguageProvider extends ChangeNotifier {
         return 'Español';
       case 'he':
         return 'עברית';
-      case 'yi':
-        return 'יידיש';
       case 'ar':
         return 'العربية';
       default:

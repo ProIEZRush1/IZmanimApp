@@ -51,7 +51,6 @@ class SettingsScreen extends StatelessWidget {
                     _buildLanguageOption(dialogContext, provider, 'en', 'English'),
                     _buildLanguageOption(dialogContext, provider, 'es', 'Español'),
                     _buildLanguageOption(dialogContext, provider, 'he', 'עברית'),
-                    _buildLanguageOption(dialogContext, provider, 'yi', 'יידיש'),
                     _buildLanguageOption(dialogContext, provider, 'ar', 'العربية'),
                   ],
                 ),

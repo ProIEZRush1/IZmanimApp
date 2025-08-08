@@ -3,7 +3,7 @@
 A beautiful Flutter app for Jewish prayer times (Zmanim) with multi-language support.
 
 ## Features
-- 🌍 Multi-language support (English, Spanish, Hebrew, Yiddish, Arabic)
+- 🌍 Multi-language support (English, Spanish, Hebrew, Arabic)
 - 📍 Location-based prayer times
 - 🌓 Dark/Light theme
 - 📅 Date navigation
@@ -21,5 +21,4 @@ This app connects to the production server at: https://izmanim.overcloud.us
 - English (en)
 - Español (es)
 - עברית (he)
-- יידיש (yi)
 - العربية (ar)

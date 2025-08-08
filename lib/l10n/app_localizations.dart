@@ -87,31 +87,6 @@ class AppLocalizations {
       'save': 'שמור',
       'cancel': 'ביטול',
     },
-    'yi': {
-      'app_title': 'זמנים',
-      'today': 'היינט',
-      'tomorrow': 'מארגן',
-      'settings': 'איינשטעלונגען',
-      'location': 'ארט',
-      'language': 'שפראך',
-      'theme': 'טעמע',
-      'light': 'ליכט',
-      'dark': 'טונקל',
-      'system': 'סיסטעם',
-      'select_location': 'אויסקלייבן ארט',
-      'current_location': 'איצטיקער ארט',
-      'custom_location': 'באזונדער ארט',
-      'latitude': 'ברייט',
-      'longitude': 'לענג',
-      'search': 'זוכן',
-      'no_zmanim': 'קיין זמנים',
-      'error_loading': 'פעלער אין לאדן',
-      'retry': 'פרובירן ווידער',
-      'about': 'וועגן',
-      'version': 'ווערסיע',
-      'save': 'היט',
-      'cancel': 'אָפּזאָגן',
-    },
     'ar': {
       'app_title': 'الأوقات',
       'today': 'اليوم',
@@ -149,7 +124,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'es', 'he', 'yi', 'ar'].contains(locale.languageCode);
+    return ['en', 'es', 'he', 'ar'].contains(locale.languageCode);
   }
   
   @override
