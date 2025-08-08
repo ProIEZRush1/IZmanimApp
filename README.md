@@ -10,7 +10,7 @@ A beautiful Flutter app for Jewish prayer times (Zmanim) with multi-language sup
 - 🕐 Real-time next prayer time display
 
 ## API Server
-This app connects to the production server at: https://izmanim.bluemango.com.mx
+This app connects to the production server at: https://izmanim.overcloud.us
 
 ## Setup
 1. Clone the repository

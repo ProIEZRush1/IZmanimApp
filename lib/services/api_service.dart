@@ -4,7 +4,7 @@ import '../models/zman.dart';
 import '../models/location.dart';
 
 class ApiService {
-  static const String baseUrl = 'https://izmanim.bluemango.com.mx/api';
+  static const String baseUrl = 'https://izmanim.overcloud.us/api';
   
   Future<List<Zman>> getZmanim({
     required double latitude,
