@@ -1,0 +1,48 @@
+<!-- App Icon: Sun rising over clock face -->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#F5F5DC"/>
+  
+  <!-- Sun -->
+  <g id="sun">
+    <!-- Sun rays -->
+    <rect x="500" y="100" width="24" height="120" rx="12" fill="#FFA500" />
+    <rect x="500" y="100" width="24" height="120" rx="12" fill="#FFA500" transform="rotate(30 512 512)" />
+    <rect x="500" y="100" width="24" height="120" rx="12" fill="#FFA500" transform="rotate(60 512 512)" />
+    <rect x="500" y="100" width="24" height="120" rx="12" fill="#FFA500" transform="rotate(-30 512 512)" />
+    <rect x="500" y="100" width="24" height="120" rx="12" fill="#FFA500" transform="rotate(-60 512 512)" />
+    
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(15 512 512)" />
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(45 512 512)" />
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(75 512 512)" />
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(-15 512 512)" />
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(-45 512 512)" />
+    <rect x="500" y="140" width="24" height="60" rx="12" fill="#FFA500" transform="rotate(-75 512 512)" />
+    
+    <!-- Sun circle -->
+    <circle cx="512" cy="380" r="180" fill="#FFA500" />
+  </g>
+  
+  <!-- Clock face (half visible) -->
+  <g id="clock">
+    <!-- Clock outer ring -->
+    <path d="M 200 500 A 312 312 0 0 0 824 500 L 824 550 A 312 312 0 0 1 200 550 Z" 
+          fill="#0B3D66" stroke="none"/>
+    
+    <!-- Clock face -->
+    <path d="M 240 520 A 272 272 0 0 0 784 520 L 784 530 A 272 272 0 0 1 240 530 Z" 
+          fill="#FFFFFF" stroke="none"/>
+    
+    <!-- Clock marks -->
+    <rect x="506" y="530" width="12" height="40" fill="#0B3D66" />
+    <rect x="300" y="580" width="12" height="30" fill="#0B3D66" transform="rotate(-60 512 700)" />
+    <rect x="724" y="580" width="12" height="30" fill="#0B3D66" transform="rotate(60 512 700)" />
+    
+    <!-- Clock hands -->
+    <line x1="512" y1="700" x2="440" y2="620" stroke="#0B3D66" stroke-width="16" stroke-linecap="round"/>
+    <line x1="512" y1="700" x2="580" y2="620" stroke="#0B3D66" stroke-width="16" stroke-linecap="round"/>
+    
+    <!-- Center dot -->
+    <circle cx="512" cy="700" r="20" fill="#0B3D66" />
+  </g>
+</svg>
