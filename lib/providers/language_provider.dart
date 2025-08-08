@@ -42,7 +42,7 @@ class LanguageProvider extends ChangeNotifier {
   }
   
   TextDirection getTextDirection() {
-    return ['he', 'yi', 'ar'].contains(_currentLocale.languageCode)
+    return ['he', 'ar'].contains(_currentLocale.languageCode)
         ? TextDirection.rtl
         : TextDirection.ltr;
   }
