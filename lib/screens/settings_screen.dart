@@ -40,17 +40,26 @@ class SettingsScreen extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(localizations.get('language')),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildLanguageOption(context, provider, 'en', 'English'),
-                  _buildLanguageOption(context, provider, 'es', 'Español'),
-                  _buildLanguageOption(context, provider, 'he', 'עברית'),
-                  _buildLanguageOption(context, provider, 'yi', 'יידיש'),
-                  _buildLanguageOption(context, provider, 'ar', 'العربية'),
+          builder: (BuildContext dialogContext) {
+            return Directionality(
+              textDirection: provider.getTextDirection(),
+              child: AlertDialog(
+                title: Text(localizations.get('language')),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildLanguageOption(dialogContext, provider, 'en', 'English'),
+                    _buildLanguageOption(dialogContext, provider, 'es', 'Español'),
+                    _buildLanguageOption(dialogContext, provider, 'he', 'עברית'),
+                    _buildLanguageOption(dialogContext, provider, 'yi', 'יידיש'),
+                    _buildLanguageOption(dialogContext, provider, 'ar', 'العربية'),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(dialogContext),
+                    child: Text(localizations.get('cancel') ?? 'Cancel'),
+                  ),
                 ],
               ),
             );
@@ -81,15 +90,25 @@ class SettingsScreen extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(localizations.get('theme')),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildThemeOption(context, provider, ThemeMode.light, localizations.get('light')),
-                  _buildThemeOption(context, provider, ThemeMode.dark, localizations.get('dark')),
-                  _buildThemeOption(context, provider, ThemeMode.system, localizations.get('system')),
+          builder: (BuildContext dialogContext) {
+            final langProvider = context.read<LanguageProvider>();
+            return Directionality(
+              textDirection: langProvider.getTextDirection(),
+              child: AlertDialog(
+                title: Text(localizations.get('theme')),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildThemeOption(dialogContext, provider, ThemeMode.light, localizations.get('light')),
+                    _buildThemeOption(dialogContext, provider, ThemeMode.dark, localizations.get('dark')),
+                    _buildThemeOption(dialogContext, provider, ThemeMode.system, localizations.get('system')),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(dialogContext),
+                    child: Text(localizations.get('cancel') ?? 'Cancel'),
+                  ),
                 ],
               ),
             );

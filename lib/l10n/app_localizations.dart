@@ -35,6 +35,7 @@ class AppLocalizations {
       'about': 'About',
       'version': 'Version',
       'save': 'Save',
+      'cancel': 'Cancel',
     },
     'es': {
       'app_title': 'Zmanim',
@@ -59,6 +60,7 @@ class AppLocalizations {
       'about': 'Acerca de',
       'version': 'Versión',
       'save': 'Guardar',
+      'cancel': 'Cancelar',
     },
     'he': {
       'app_title': 'זמנים',
@@ -83,6 +85,7 @@ class AppLocalizations {
       'about': 'אודות',
       'version': 'גרסה',
       'save': 'שמור',
+      'cancel': 'ביטול',
     },
     'yi': {
       'app_title': 'זמנים',
@@ -107,6 +110,7 @@ class AppLocalizations {
       'about': 'וועגן',
       'version': 'ווערסיע',
       'save': 'היט',
+      'cancel': 'אָפּזאָגן',
     },
     'ar': {
       'app_title': 'الأوقات',
@@ -131,6 +135,7 @@ class AppLocalizations {
       'about': 'حول',
       'version': 'الإصدار',
       'save': 'حفظ',
+      'cancel': 'إلغاء',
     },
   };
   
