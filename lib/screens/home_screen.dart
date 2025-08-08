@@ -171,33 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 16),
         ],
-        if (provider.primaryZmanim.isNotEmpty) ...[
-          Text(
-            'Primary Times',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          ...provider.primaryZmanim.map((zman) => ZmanCard(
-            zman: zman,
-            isNext: zman == nextZman,
-          )),
-        ],
-        if (provider.secondaryZmanim.isNotEmpty) ...[
-          const SizedBox(height: 24),
-          Text(
-            'Additional Times',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          ...provider.secondaryZmanim.map((zman) => ZmanCard(
-            zman: zman,
-            isNext: zman == nextZman,
-          )),
-        ],
+        ...provider.zmanim.map((zman) => ZmanCard(
+          zman: zman,
+          isNext: zman == nextZman,
+        )),
       ],
     );
   }

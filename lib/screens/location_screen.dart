@@ -16,10 +16,12 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   final ApiService _apiService = ApiService();
   List<app_location.Location> _presetLocations = [];
+  List<app_location.Location> _filteredLocations = [];
   bool _isLoadingPresets = false;
   
   final _latController = TextEditingController();
   final _lonController = TextEditingController();
+  final _searchController = TextEditingController();
   
   @override
   void initState() {
@@ -31,7 +33,21 @@ class _LocationScreenState extends State<LocationScreen> {
   void dispose() {
     _latController.dispose();
     _lonController.dispose();
+    _searchController.dispose();
     super.dispose();
+  }
+  
+  void _filterLocations(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredLocations = _presetLocations;
+      } else {
+        _filteredLocations = _presetLocations
+            .where((location) =>
+                location.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
   }
   
   Future<void> _loadPresetLocations() async {
@@ -44,6 +60,7 @@ class _LocationScreenState extends State<LocationScreen> {
       _presetLocations = await _apiService.getLocations(
         lang: langProvider.currentLocale.languageCode,
       );
+      _filteredLocations = _presetLocations;
     } catch (e) {
       // Handle error
     } finally {
@@ -98,10 +115,40 @@ class _LocationScreenState extends State<LocationScreen> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
+            // Search field
+            TextField(
+              controller: _searchController,
+              onChanged: _filterLocations,
+              decoration: InputDecoration(
+                labelText: localizations.get('search'),
+                prefixIcon: const Icon(Icons.search),
+                border: const OutlineInputBorder(),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          _filterLocations('');
+                        },
+                      )
+                    : null,
+              ),
+            ),
+            const SizedBox(height: 8),
             if (_isLoadingPresets)
               const Center(child: CircularProgressIndicator())
+            else if (_filteredLocations.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'No locations found',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              )
             else
-              ..._presetLocations.map((location) => Card(
+              ..._filteredLocations.map((location) => Card(
                     child: ListTile(
                       title: Text(location.name),
                       subtitle: Text(

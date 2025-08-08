@@ -15,9 +15,6 @@ class ZmanimProvider extends ChangeNotifier {
   String? get error => _error;
   DateTime get selectedDate => _selectedDate;
   
-  List<Zman> get primaryZmanim => _zmanim.where((z) => z.isPrimary).toList();
-  List<Zman> get secondaryZmanim => _zmanim.where((z) => !z.isPrimary).toList();
-  
   void setDate(DateTime date) {
     _selectedDate = date;
     notifyListeners();

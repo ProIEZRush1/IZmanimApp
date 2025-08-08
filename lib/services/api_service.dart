@@ -40,10 +40,15 @@ class ApiService {
     }
   }
   
-  Future<List<Location>> getLocations({String lang = 'en'}) async {
+  Future<List<Location>> getLocations({String lang = 'en', String? search}) async {
     try {
+      final queryParams = {'lang': lang};
+      if (search != null && search.isNotEmpty) {
+        queryParams['search'] = search;
+      }
+      
       final uri = Uri.parse('$baseUrl/locations').replace(
-        queryParameters: {'lang': lang},
+        queryParameters: queryParams,
       );
       final response = await http.get(uri);
       

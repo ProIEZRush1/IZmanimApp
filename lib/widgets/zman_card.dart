@@ -32,9 +32,9 @@ class ZmanCard extends StatelessWidget {
           ),
         ),
         title: Text(
-          zman.name,
-          style: TextStyle(
-            fontWeight: zman.isPrimary ? FontWeight.bold : FontWeight.normal,
+          zman.getDisplayName(),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
           ),
         ),
         trailing: Text(
@@ -49,32 +49,39 @@ class ZmanCard extends StatelessWidget {
   }
   
   IconData _getIconForZman(String key) {
-    switch (key) {
-      case 'alot_hashachar':
-        return Icons.brightness_3;
-      case 'misheyakir':
-        return Icons.visibility;
-      case 'sunrise':
-        return Icons.wb_sunny;
-      case 'sof_zman_shema':
-        return Icons.menu_book;
-      case 'sof_zman_tefillah':
-        return Icons.people;
-      case 'chatzot':
-        return Icons.timelapse;
-      case 'mincha_gedolah':
-      case 'mincha_ketanah':
-        return Icons.access_time;
-      case 'plag_hamincha':
-        return Icons.schedule;
-      case 'sunset':
-        return Icons.wb_twilight;
-      case 'tzeis_hakochavim':
-        return Icons.star;
-      case 'chatzot_layla':
-        return Icons.nights_stay;
-      default:
-        return Icons.access_time;
+    // Handle old and new key formats
+    if (key.contains('chatzotNight') || key.contains('chatzot_layla')) {
+      return Icons.nights_stay;
+    } else if (key.contains('alotHaShachar') || key.contains('alot_hashachar')) {
+      return Icons.brightness_3;
+    } else if (key.contains('misheyakir')) {
+      return Icons.visibility;
+    } else if (key.contains('dawn')) {
+      return Icons.brightness_5;
+    } else if (key.contains('sunrise')) {
+      return Icons.wb_sunny;
+    } else if (key.contains('sofZmanShma') || key.contains('sof_zman_shema')) {
+      return Icons.menu_book;
+    } else if (key.contains('sofZmanTfilla') || key.contains('sof_zman_tefillah')) {
+      return Icons.people;
+    } else if (key == 'chatzot') {
+      return Icons.timelapse;
+    } else if (key.contains('minchaGedola') || key.contains('mincha_gedolah')) {
+      return Icons.access_time;
+    } else if (key.contains('minchaKetana') || key.contains('mincha_ketanah')) {
+      return Icons.timer;
+    } else if (key.contains('plagHaMincha') || key.contains('plag_hamincha')) {
+      return Icons.schedule;
+    } else if (key.contains('sunset')) {
+      return Icons.wb_twilight;
+    } else if (key.contains('beinHaShmashos')) {
+      return Icons.gradient;
+    } else if (key.contains('dusk')) {
+      return Icons.nights_stay;
+    } else if (key.contains('tzeit') || key.contains('tzeis_hakochavim')) {
+      return Icons.star;
+    } else {
+      return Icons.access_time;
     }
   }
 }
