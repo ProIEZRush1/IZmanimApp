@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/location_provider.dart';
@@ -18,6 +19,7 @@ class _LocationScreenState extends State<LocationScreen> {
   List<app_location.Location> _presetLocations = [];
   List<app_location.Location> _filteredLocations = [];
   bool _isLoadingPresets = false;
+  Timer? _debounce;
   
   final _latController = TextEditingController();
   final _lonController = TextEditingController();
@@ -34,20 +36,49 @@ class _LocationScreenState extends State<LocationScreen> {
     _latController.dispose();
     _lonController.dispose();
     _searchController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
   
-  void _filterLocations(String query) {
-    setState(() {
-      if (query.isEmpty) {
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _filterLocations(query);
+    });
+  }
+  
+  void _filterLocations(String query) async {
+    if (query.isEmpty) {
+      setState(() {
         _filteredLocations = _presetLocations;
-      } else {
+      });
+      return;
+    }
+    
+    setState(() {
+      _isLoadingPresets = true;
+    });
+    
+    try {
+      final langProvider = context.read<LanguageProvider>();
+      final searchResults = await _apiService.getLocations(
+        lang: langProvider.currentLocale.languageCode,
+        search: query,
+      );
+      setState(() {
+        _filteredLocations = searchResults;
+        _isLoadingPresets = false;
+      });
+    } catch (e) {
+      // If search fails, filter local locations
+      setState(() {
         _filteredLocations = _presetLocations
             .where((location) =>
                 location.name.toLowerCase().contains(query.toLowerCase()))
             .toList();
-      }
-    });
+        _isLoadingPresets = false;
+      });
+    }
   }
   
   Future<void> _loadPresetLocations() async {
@@ -118,7 +149,7 @@ class _LocationScreenState extends State<LocationScreen> {
             // Search field
             TextField(
               controller: _searchController,
-              onChanged: _filterLocations,
+              onChanged: _onSearchChanged,
               decoration: InputDecoration(
                 labelText: localizations.get('search'),
                 prefixIcon: const Icon(Icons.search),
