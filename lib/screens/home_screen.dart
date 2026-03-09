@@ -4,6 +4,7 @@ import '../providers/language_provider.dart';
 import '../providers/zmanim_provider.dart';
 import '../providers/location_provider.dart';
 import '../providers/theme_provider.dart';
+import '../providers/notification_provider.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/zman_card.dart';
 import '../widgets/date_selector.dart';
@@ -41,6 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
         location: locationProvider.currentLocation!,
         language: langProvider.currentLocale.languageCode,
       );
+
+      // Schedule notifications for loaded zmanim
+      if (zmanimProvider.zmanim.isNotEmpty && mounted) {
+        final notifProvider = context.read<NotificationProvider>();
+        await notifProvider.scheduleNotifications(
+          zmanim: zmanimProvider.zmanim,
+          date: zmanimProvider.selectedDate,
+          timezone: locationProvider.currentLocation!.timezone,
+          lang: langProvider.currentLocale.languageCode,
+        );
+      }
     }
   }
 

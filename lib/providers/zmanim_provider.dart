@@ -9,40 +9,47 @@ class ZmanimProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   DateTime _selectedDate = DateTime.now();
-  
+  int _requestId = 0;
+
   List<Zman> get zmanim => _zmanim;
   bool get isLoading => _isLoading;
   String? get error => _error;
   DateTime get selectedDate => _selectedDate;
-  
+
   void setDate(DateTime date) {
     _selectedDate = date;
     notifyListeners();
   }
-  
+
   Future<void> loadZmanim({
     required Location location,
     required String language,
   }) async {
+    final currentRequestId = ++_requestId;
     _isLoading = true;
     _error = null;
     notifyListeners();
-    
+
     try {
-      _zmanim = await _apiService.getZmanim(
+      final result = await _apiService.getZmanim(
         latitude: location.latitude,
         longitude: location.longitude,
         date: _selectedDate.toIso8601String().split('T')[0],
         timezone: location.timezone,
         lang: language,
       );
+      if (currentRequestId != _requestId) return;
+      _zmanim = result;
       _error = null;
     } catch (e) {
+      if (currentRequestId != _requestId) return;
       _error = e.toString();
       _zmanim = [];
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      if (currentRequestId == _requestId) {
+        _isLoading = false;
+        notifyListeners();
+      }
     }
   }
   

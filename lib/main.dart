@@ -5,10 +5,14 @@ import 'providers/language_provider.dart';
 import 'providers/zmanim_provider.dart';
 import 'providers/location_provider.dart';
 import 'providers/theme_provider.dart';
+import 'providers/notification_provider.dart';
+import 'services/notification_service.dart';
 import 'screens/home_screen.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
   runApp(const MyApp());
 }
 
@@ -23,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ZmanimProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()..initialize()),
       ],
       child: Consumer2<LanguageProvider, ThemeProvider>(
         builder: (context, langProvider, themeProvider, child) {

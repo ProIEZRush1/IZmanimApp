@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/language_provider.dart';
 import '../providers/theme_provider.dart';
+import '../providers/notification_provider.dart';
 import '../l10n/app_localizations.dart';
+import 'notification_settings_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -21,6 +23,8 @@ class SettingsScreen extends StatelessWidget {
         ),
         body: ListView(
           children: [
+            _buildNotificationSection(context, localizations),
+            const Divider(),
             _buildLanguageSection(context, localizations, langProvider),
             const Divider(),
             _buildThemeSection(context, localizations, themeProvider),
@@ -32,6 +36,26 @@ class SettingsScreen extends StatelessWidget {
     );
   }
   
+  Widget _buildNotificationSection(BuildContext context, AppLocalizations localizations) {
+    final notifProvider = context.watch<NotificationProvider>();
+    final count = notifProvider.preferences.where((p) => p.enabled).length;
+
+    return ListTile(
+      leading: const Icon(Icons.notifications),
+      title: Text(localizations.get('notifications')),
+      subtitle: Text(count > 0
+          ? '$count ${localizations.get('active_notifications')}'
+          : localizations.get('no_notifications')),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const NotificationSettingsScreen()),
+        );
+      },
+    );
+  }
+
   Widget _buildLanguageSection(BuildContext context, AppLocalizations localizations, LanguageProvider provider) {
     return ListTile(
       leading: const Icon(Icons.language),

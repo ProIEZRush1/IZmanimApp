@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/zman.dart';
+import '../providers/notification_provider.dart';
 
 class ZmanCard extends StatelessWidget {
   final Zman zman;
   final bool isNext;
-  
+
   const ZmanCard({
     super.key,
     required this.zman,
     this.isNext = false,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+    final hasNotification = context.watch<NotificationProvider>().isZmanSubscribed(zman.key);
+
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       color: isNext ? theme.colorScheme.secondaryContainer : null,
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isNext 
+          backgroundColor: isNext
               ? theme.colorScheme.secondary
               : theme.colorScheme.primary.withOpacity(0.2),
           child: Icon(
@@ -37,12 +40,26 @@ class ZmanCard extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        trailing: Text(
-          zman.time ?? '--:--',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: isNext ? theme.colorScheme.secondary : null,
-          ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (hasNotification)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Icon(
+                  Icons.notifications_active,
+                  size: 16,
+                  color: theme.colorScheme.primary.withOpacity(0.6),
+                ),
+              ),
+            Text(
+              zman.time ?? '--:--',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: isNext ? theme.colorScheme.secondary : null,
+              ),
+            ),
+          ],
         ),
       ),
     );
